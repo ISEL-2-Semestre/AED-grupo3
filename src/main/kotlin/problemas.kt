@@ -1,9 +1,16 @@
 
 fun countPairsThatSumN(v: IntArray, l: Int, r: Int, s: Int): Int{
     var p = 0
-    for (i in l..r){
-        for (j in i+1 ..r){
-            if (v[i] + v[j] == s) p++
+    var left = l
+    var right = r
+    while (left != right){
+        val count = v[right] + v[left]
+        if (count < s) ++left
+        if (count > s) ++right
+        if (count == s){
+            p++
+            left++
+            right++
         }
     }
     return p
@@ -21,12 +28,12 @@ fun countEachThreeElementsThatSumN(v: IntArray, l: Int, r: Int, s: Int): Int{
     return p
 }
 
-fun countInRange(v: IntArray, l: Int, r: Int, min: Int, max: Int): Int{
+/*fun countInRange(v: IntArray, l: Int, r: Int, min: Int, max: Int): Int{
 
-}
+}*/
 
 
 fun main (){
-    //print(countPairsThatSumN(intArrayOf(1, 2, 3, 4, 5, 6, 7, 8), 0, 7, 4))
-    print(countEachThreeElementsThatSumN(intArrayOf(1, 2, 3, 4, 5, 6, 7, 8), 0, 7, 9))
+    print(countPairsThatSumN(intArrayOf(1, 2, 3, 4, 5, 6, 7, 8), 0, 7, 10))
+    //print(countEachThreeElementsThatSumN(intArrayOf(1, 2, 3, 4, 5, 6, 7, 8), 0, 7, 9))
 }
