@@ -48,7 +48,7 @@ fun PriorityQueue<Utente?>.poll(): Utente?{
         minHeapify(/*array, size, */0/*, cmp*/)
     }
     return ut
-    //obtém e remove o elemento mais prioritário O(logn)
+    //obtém e remove o element mais prioritário O(logn)
 }
 
 fun PriorityClient.isEmpty(): Boolean = size == 0
