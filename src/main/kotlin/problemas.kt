@@ -1,4 +1,5 @@
 
+//exercicio 1
 fun countPairsThatSumN(v: IntArray, l: Int, r: Int, s: Int): Int{
     var p = 0
     var left = l
