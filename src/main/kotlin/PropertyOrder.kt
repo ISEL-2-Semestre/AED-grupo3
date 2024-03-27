@@ -1,5 +1,5 @@
 import java.util.PriorityQueue
-
+/*
 fun left(i: Int) = 2*i + 1
 fun right(i: Int) = 2*i + 2
 fun parent(i: Int) = (i - 1)/2
@@ -67,3 +67,5 @@ fun PriorityClient.minHeapify(pos: Int){
 fun main(){
     val cmp ={u1: Utente, u2: Utente -> u1.priotity - u2.priotity}
 }
+
+ */

@@ -4,20 +4,23 @@ fun countPairsThatSumN(v: IntArray, l: Int, r: Int, s: Int): Int{
     var p = 0
     var left = l
     var right = r
-    while (left != right){
+    while (left < right){
         val count = v[right] + v[left]
         if (count < s) ++left
-        if (count > s) ++right
+        if (count > s) --right
         if (count == s){
             p++
             left++
-            right++
+            right--
         }
     }
     return p
 }
 
-fun countEachThreeElementsThatSumN(v: IntArray, l: Int, r: Int, s: Int): Int{
+// exercicio 2
+
+// 2.1
+fun countEachThreeElementsThatSumN21(v: IntArray, l: Int, r: Int, s: Int): Int{
     var p = 0
     for (i in l..r){
         for (j in i+1 ..r){
@@ -28,6 +31,12 @@ fun countEachThreeElementsThatSumN(v: IntArray, l: Int, r: Int, s: Int): Int{
     }
     return p
 }
+
+//2.2
+fun countEachThreeElementsThatSumN22(v: IntArray, l: Int, r: Int, s: Int): Int{
+
+}
+
 
 /*fun countInRange(v: IntArray, l: Int, r: Int, min: Int, max: Int): Int{
 
