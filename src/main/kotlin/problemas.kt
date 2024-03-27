@@ -22,8 +22,8 @@ fun countPairsThatSumN(v: IntArray, l: Int, r: Int, s: Int): Int{
 // 2.1
 fun countEachThreeElementsThatSumN21(v: IntArray, l: Int, r: Int, s: Int): Int{
     var p = 0
-    for (i in l..r){
-        for (j in i+1 ..r){
+    for (i in l..r - 2){
+        for (j in i+1 ..r - 1){
             for (k in j+1 .. r){
                 if (v[i] + v[j] + v[k] == s && v[i] != v[j] && v[k] != v[i] && v[j] != v[k])p++
             }
