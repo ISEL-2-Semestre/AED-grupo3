@@ -63,9 +63,8 @@ fun countEachThreeElementsThatSumN23(v: IntArray, l: Int, r: Int, s: Int): Int {
             if (j < s) ++left
             if (j > s) --right
             if (j == s){
-                p++
-                left++
-                right--
+                if (v[right] != v[left] && v[right] != v[i] && v[left] != v[i]) p++
+                --right
             }
         }
     }
@@ -74,17 +73,13 @@ fun countEachThreeElementsThatSumN23(v: IntArray, l: Int, r: Int, s: Int): Int {
 
 //exercicio 3
 fun countInRange(v: IntArray, l: Int, r: Int, min: Int, max: Int): Int{
-    var p = 0
-    var min = l
-    var max = r
-    var mid = (l + r)/2
-    return 2
+
 }
 
 
 fun main () {
     //print(countPairsThatSumN(intArrayOf(1, 2, 3, 4, 5, 6, 7, 8), 0, 7, 10))
-    println(countEachThreeElementsThatSumN21(intArrayOf(1, 2, 3, 4, 5, 6, 7, 8), 0, 7, 10))
-    println(countEachThreeElementsThatSumN22(intArrayOf(1, 2, 3, 4, 5, 6, 7, 8), 0, 7, 10))
-    println(countEachThreeElementsThatSumN23(intArrayOf(1, 2, 3, 4, 5, 6, 7, 8), 0, 7, 10))
+    println(countEachThreeElementsThatSumN21(intArrayOf(1, 2, 3, 3, 5, 6, 7, 8), 0, 7, 15))
+    println(countEachThreeElementsThatSumN22(intArrayOf(1, 2, 3, 3, 5, 6, 7, 8), 0, 7, 15))
+    println(countEachThreeElementsThatSumN23(intArrayOf(1, 2, 3, 3, 5, 6, 7, 8), 0, 7, 15))
 }
