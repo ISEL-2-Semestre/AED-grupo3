@@ -84,7 +84,7 @@ fun countInRange(v: IntArray, l: Int, r: Int, min: Int, max: Int): Int{
 
 fun main () {
     //print(countPairsThatSumN(intArrayOf(1, 2, 3, 4, 5, 6, 7, 8), 0, 7, 10))
-    //println(countEachThreeElementsThatSumN21(intArrayOf(1, 2, 3, 3, 5, 6, 7, 8), 0, 7, 8))
-    //println(countEachThreeElementsThatSumN22(intArrayOf(1, 2, 3, 3, 5, 6, 7, 8), 0, 7, 9))
+    println(countEachThreeElementsThatSumN21(intArrayOf(1, 2, 3, 4, 5, 6, 7, 8), 0, 7, 10))
+    println(countEachThreeElementsThatSumN22(intArrayOf(1, 2, 3, 4, 5, 6, 7, 8), 0, 7, 10))
     println(countEachThreeElementsThatSumN23(intArrayOf(1, 2, 3, 4, 5, 6, 7, 8), 0, 7, 10))
 }
