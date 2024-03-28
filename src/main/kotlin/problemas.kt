@@ -35,13 +35,15 @@ fun countEachThreeElementsThatSumN21(v: IntArray, l: Int, r: Int, s: Int): Int{
 //2.2 O(n^2logn)
 fun countEachThreeElementsThatSumN22(v: IntArray, l: Int, r: Int, s: Int): Int{
     var p = 0
+    //var lastTriple = Triple(0,0,0)
     mergeSort(v,l,r)
     for (i in l .. r - 2){
         for (j in i + 1 .. r - 1){
             val k = s - v[i] - v[j]
             if (k < v[j]) break
             val c = binarySearch(v, j + 1, r, k)
-            if (c != -1) p++
+            if (c != -1 && v[i] != v[j] && v[j] != k && v[i] != k /*&& lastTriple != Triple(v[i], v[j], c)*/) p++
+            //lastTriple = Triple(v[i], v[j], c)
         }
     }
     return p
@@ -52,13 +54,20 @@ fun countEachThreeElementsThatSumN22(v: IntArray, l: Int, r: Int, s: Int): Int{
 
 fun countEachThreeElementsThatSumN23(v: IntArray, l: Int, r: Int, s: Int): Int {
     var p = 0
-    var left = l
-    var right = r
     mergeSort(v, l, r)
-    print(v)
-    for (i in 0..v.size - 1) {
-        val c = binarySearch(v, l, r, s - v[l] - v[r])
-        if (c != -1) p++
+    for (i in l .. r - 2) {
+        var left = l + i + 1
+        var right = r
+        while (left < right){
+            val j = v[right] + v[left] + v[i]
+            if (j < s) ++left
+            if (j > s) --right
+            if (j == s){
+                p++
+                left++
+                right--
+            }
+        }
     }
     return p
 }
@@ -75,7 +84,7 @@ fun countInRange(v: IntArray, l: Int, r: Int, min: Int, max: Int): Int{
 
 fun main () {
     //print(countPairsThatSumN(intArrayOf(1, 2, 3, 4, 5, 6, 7, 8), 0, 7, 10))
-    //println(countEachThreeElementsThatSumN21(intArrayOf(1, 2, 3, 4, 5, 6, 7, 8), 0, 7, 15))
-    //println(countEachThreeElementsThatSumN22(intArrayOf(1, 2, 3, 4, 5, 6, 7, 8), 0, 7, 15))
-
+    //println(countEachThreeElementsThatSumN21(intArrayOf(1, 2, 3, 3, 5, 6, 7, 8), 0, 7, 8))
+    //println(countEachThreeElementsThatSumN22(intArrayOf(1, 2, 3, 3, 5, 6, 7, 8), 0, 7, 9))
+    println(countEachThreeElementsThatSumN23(intArrayOf(1, 2, 3, 4, 5, 6, 7, 8), 0, 7, 10))
 }
