@@ -37,7 +37,7 @@ fun countEachThreeElementsThatSumN22(v: IntArray, l: Int, r: Int, s: Int): Int{
     var p = 0
     mergeSort(v,l,r)
     for (i in l .. r - 2){
-        for (j in l + 1 .. r - 1){
+        for (j in i + 1 .. r - 1){
             val k = s - v[i] - v[j]
             if (k < v[j]) break
             val c = binarySearch(v, j + 1, r, k)
@@ -75,7 +75,7 @@ fun countInRange(v: IntArray, l: Int, r: Int, min: Int, max: Int): Int{
 
 fun main () {
     //print(countPairsThatSumN(intArrayOf(1, 2, 3, 4, 5, 6, 7, 8), 0, 7, 10))
-    //println(countEachThreeElementsThatSumN21(intArrayOf(1, 2, 3, 4, 5, 6, 7, 8), 0, 7, 9))
-    println(countEachThreeElementsThatSumN22(intArrayOf(1, 2, 3, 4, 5, 6, 7, 8), 0, 7, 9))
+    //println(countEachThreeElementsThatSumN21(intArrayOf(1, 2, 3, 4, 5, 6, 7, 8), 0, 7, 15))
+    //println(countEachThreeElementsThatSumN22(intArrayOf(1, 2, 3, 4, 5, 6, 7, 8), 0, 7, 15))
 
 }
