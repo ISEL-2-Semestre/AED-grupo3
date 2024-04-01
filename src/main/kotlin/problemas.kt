@@ -71,10 +71,37 @@ fun countEachThreeElementsThatSumN23(v: IntArray, l: Int, r: Int, s: Int): Int {
     return p
 }
 
-/*//exercicio 3
-fun countInRange(v: IntArray, l: Int, r: Int, min: Int, max: Int): Int{
+//exercicio 3
+fun countInRange(v: IntArray, l: Int, r: Int, min: Int, max: Int): Int {
+    fun lowerBound(v: IntArray, low: Int, high: Int, key: Int): Int {
 
-}*/
+        if (low > high) return low
+
+        val mid: Int = low + (high - low) / 2
+
+        return if (v[mid] >= key)
+            lowerBound(v, low, mid - 1, key)
+        else
+            lowerBound(v, mid + 1, high, key)
+    }
+
+    fun upperBound(v: IntArray, low: Int, high: Int, key: Int): Int {
+
+        if (low > high) return low
+
+        val mid: Int = low + (high - low) / 2
+
+        return if (v[mid] > key)
+            upperBound(v, low, mid - 1, key)
+        else
+            upperBound(v, mid + 1, high, key)
+    }
+
+    val lower = lowerBound(v, l, r, min)
+    val upper = upperBound(v, l, r, max)
+
+    return upper - lower
+}
 
 
 fun main () {
