@@ -1,35 +1,50 @@
+//binary search
+
+fun binarySearch(a: IntArray, l: Int, r: Int, elem: Int): Int {
+    if(r < l) return -1
+    val mid = (l+r)/2
+    return when {
+        a[mid]==elem -> mid
+        a[mid]>elem -> binarySearch(a, l, mid - 1, elem)
+        else -> binarySearch(a, mid+1, r, elem)
+    }
+}
 
 //exercicio 1
 fun countPairsThatSumN(v: IntArray, l: Int, r: Int, s: Int): Int{
-    var p = 0
+    var pairCount = 0
     var left = l
     var right = r
     while (left < right){
-        val j = v[right] + v[left]
-        if (j < s) ++left
-        if (j > s) --right
-        if (j == s){
-            p++
-            left++
-            right--
+        val pair = v[right] + v[left]
+        when {
+            pair < s -> left++
+            pair > s -> right--
+            else -> {
+                pairCount++
+                left++
+                right--
+            }
         }
     }
-    return p
+    return pairCount
 }
 
 // exercicio 2
 
 // 2.1 O(n^3)
 fun countEachThreeElementsThatSumN21(v: IntArray, l: Int, r: Int, s: Int): Int{
-    var p = 0
+    var count = 0
     for (i in l..r - 2){
-        for (j in i+1 ..r - 1){
+        for (j in i+1..<r){
             for (k in j+1 .. r){
-                if (v[i] + v[j] + v[k] == s && v[i] != v[j] && v[k] != v[i] && v[j] != v[k])p++
+                if (v[i] + v[j] + v[k] == s &&
+                    i != j && j != k && i != k)
+                    count++
             }
         }
     }
-    return p
+    return count
 }
 
 //2.2 O(n^2logn)
@@ -73,40 +88,12 @@ fun countEachThreeElementsThatSumN23(v: IntArray, l: Int, r: Int, s: Int): Int {
 
 //exercicio 3
 fun countInRange(v: IntArray, l: Int, r: Int, min: Int, max: Int): Int {
-    fun lowerBound(v: IntArray, low: Int, high: Int, key: Int): Int {
+    val lower = binarySearch(v,min,l,r+1)
+    val upper = binarySearch(v,max, l, r + 1)
 
-        if (low > high) return low
-
-        val mid: Int = low + (high - low) / 2
-
-        return if (v[mid] >= key)
-            lowerBound(v, low, mid - 1, key)
-        else
-            lowerBound(v, mid + 1, high, key)
+    return if (lower >= 0 && upper >= 0) {
+        upper - lower + 1
+    } else {
+        -(lower + 1) - (-(upper + 1))
     }
-
-    fun upperBound(v: IntArray, low: Int, high: Int, key: Int): Int {
-
-        if (low > high) return low
-
-        val mid: Int = low + (high - low) / 2
-
-        return if (v[mid] > key)
-            upperBound(v, low, mid - 1, key)
-        else
-            upperBound(v, mid + 1, high, key)
-    }
-
-    val lower = lowerBound(v, l, r, min)
-    val upper = upperBound(v, l, r, max)
-
-    return upper - lower
-}
-
-
-fun main () {
-    //print(countPairsThatSumN(intArrayOf(1, 2, 3, 4, 5, 6, 7, 8), 0, 7, 10))
-    println(countEachThreeElementsThatSumN21(intArrayOf(1, 2, 3, 3, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20), 0, 19, 31))
-    println(countEachThreeElementsThatSumN22(intArrayOf(1, 2, 3, 3, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20), 0, 19, 31))
-    println(countEachThreeElementsThatSumN23(intArrayOf(1, 2, 3, 3, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20), 0, 19, 31))
 }
