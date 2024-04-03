@@ -1,6 +1,7 @@
 import java.text.SimpleDateFormat
 import java.util.*
-import java.io.File
+import java.io.BufferedReader
+import java.io.FileReader
 import kotlin.math.abs
 
 
@@ -10,14 +11,17 @@ private const val TWEET_PARTS = 4
 
 fun loadTweets(filename: String): List<Tweet> {
     val tweets = mutableListOf<Tweet>()
-    File(filename).forEachLine { line ->
-        val parts = line.split("; ")
-        if (parts.size == TWEET_PARTS) {
-            val createdAt = parts[0].split(": ")[1].trim('\"')
-            val id = parts[2].split(": ")[1].toLong()
-            val uid = parts[3].split(": ")[1].trim('}', '\"').toLong()
-            val hashtags = parts[1].split(": ")[1].trim('[', ']', '\"').split(", ")
-            tweets.add(Tweet(createdAt, hashtags, id, uid))
+    val reader = BufferedReader(FileReader(filename))
+    reader.use { r ->
+        r.forEachLine { line ->
+            val parts = line.split("; ")
+            if (parts.size == TWEET_PARTS) {
+                val createdAt = parts[0].split(": ")[1].trim('\"')
+                val id = parts[2].split(": ")[1].toLong()
+                val uid = parts[3].split(": ")[1].trim('}', '\"').toLong()
+                val hashtags = parts[1].split(": ")[1].trim('[', ']', '\"').split(", ")
+                tweets.add(Tweet(createdAt, hashtags, id, uid))
+            }
         }
     }
     return tweets
@@ -57,7 +61,8 @@ fun processCommand(command: String, tweets: List<Tweet>) {
     val parts = command.split(" ")
     when (parts[0]) {
         "moreMentioned" -> {
-            val hashtags = File(parts[1]).readLines()
+            val reader = BufferedReader(FileReader(parts[1]))
+            val hashtags = reader.use { it.readLines() }
             println(mostMentioned(tweets, hashtags))
         }
         "nearest" -> {
@@ -67,12 +72,12 @@ fun processCommand(command: String, tweets: List<Tweet>) {
         }
     }
 }
-
-fun main(args: Array<String>) {
-    val tweets = loadTweets("tweetExample.twt")
+fun main() {
+    val tweets = loadTweets("tweetsSample.twt")
     while (true) {
         print("Enter command: ")
         val command = readln()
         processCommand(command, tweets)
     }
 }
+
