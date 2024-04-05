@@ -2,7 +2,7 @@ fun left(i: Int) = 2*i + 1
 fun right(i: Int) = 2*i + 2
 fun parent(i: Int) = (i - 1)/2
 
-fun exchange(a: Array<Int>, i: Int, j: Int) {
+private fun exchange(a: Array<Int>, i: Int, j: Int) {
     val tmp = a[i]
     a[i] = a[j]
     a[j] = tmp

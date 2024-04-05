@@ -44,7 +44,7 @@ fun partition(array: Array<Int>, left:Int, right: Int): Int {
     return i
 }
 
-fun exchange(a: Array<Int>, i: Int, j: Int) {
+private fun exchange(a: Array<Int>, i: Int, j: Int) {
     val tmp = a[i]
     a[i] = a[j]
     a[j] = tmp

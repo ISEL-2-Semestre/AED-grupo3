@@ -1,4 +1,4 @@
-fun binarySearch(a: IntArray, l: Int, r: Int, elem: Int): Int {
+private fun binarySearch(a: IntArray, l: Int, r: Int, elem: Int): Int {
     if(r < l) return -1
     val mid = (l+r)/2
     return when {
