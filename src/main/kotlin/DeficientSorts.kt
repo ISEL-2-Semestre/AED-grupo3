@@ -88,7 +88,6 @@ fun merge(tweets: Array<Pair<Tweet, Long>>, aux: Array<Pair<Tweet, Long>>, low: 
     for (k in low..high) {
         aux[k] = tweets[k]
     }
-
     var i = low
     var j = mid + 1
     for (k in low..high) {
