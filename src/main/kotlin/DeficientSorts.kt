@@ -84,22 +84,79 @@ fun partition(tweets: Array<Pair<Tweet, Long>>, low: Int, high: Int): Int {
 
 
 
-fun merge(tweets: Array<Pair<Tweet, Long>>, aux: Array<Pair<Tweet, Long>>, low: Int, mid: Int, high: Int) {
-    for (k in low..high) {
-        aux[k] = tweets[k]
-    }
-    var i = low
-    var j = mid + 1
-    for (k in low..high) {
-        when {
-            i > mid -> tweets[k] = aux[j++]
-            j > high -> tweets[k] = aux[i++]
-            aux[j].first.createdAt < aux[i].first.createdAt -> tweets[k] = aux[j++]
-            else -> tweets[k] = aux[i++]
-        }
+fun mergeSort(a: Array<Pair<Tweet, Long>>, low: Int, high: Int) {
+    if (low < high) {
+        val mid = (low + high) / 2
+        mergeSort(a, low, mid)
+        mergeSort(a, mid + 1, high)
+        merge(a, low, mid, high)
     }
 }
 
-//heap sort 3,66 s
-//quicksort 4,77 s
-//mergesort 4,51 s
+fun merge(a: Array<Pair<Tweet, Long>>, low: Int, mid: Int, high: Int) {
+    val left = a.copyOfRange(low, mid + 1)
+    val right = a.copyOfRange(mid + 1, high + 1)
+    var i = 0
+    var j = 0
+    var k = low
+
+    while (i < left.size && j < right.size) {
+        if (left[i].second <= right[j].second) {
+            a[k] = left[i]
+            i++
+        } else {
+            a[k] = right[j]
+            j++
+        }
+        k++
+    }
+
+    while (i < left.size) {
+        a[k] = left[i]
+        i++
+        k++
+    }
+
+    while (j < right.size) {
+        a[k] = right[j]
+        j++
+        k++
+    }
+}
+
+
+fun insertionSort(a: Array<Pair<Tweet, Long>>, n: Int) {
+    for (i in 1 until n) {
+        val key = a[i]
+        var j = i - 1
+
+        while (j >= 0 && a[j].second > key.second) {
+            a[j + 1] = a[j]
+            j = j - 1
+        }
+        a[j + 1] = key
+    }
+}
+
+
+fun selectionSort(array: Array<Pair<Tweet, Long>>, left: Int, right: Int) {
+    for (i in left until right) {
+        var min = i
+        for (j in i + 1..right) {
+            if (array[min].second > array[j].second) min = j
+        }
+        exchange(array, min, i)
+    }
+}
+
+fun bubbleSort(a: Array<Pair<Tweet, Long>>, n: Int) {
+    for (i in 0 until n - 1) {
+        for (j in 0 until n - i - 1) {
+            if (a[j].second > a[j + 1].second) {
+                val temp = a[j]
+                a[j] = a[j + 1]
+                a[j + 1] = temp
+            }
+        }
+    }
+}
