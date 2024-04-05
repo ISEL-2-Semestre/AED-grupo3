@@ -5,7 +5,9 @@ import java.io.FileReader
 import kotlin.math.abs
 
 
-data class Tweet(val created_at: String, val hashtags: List<String>, val id: Long, val uid: Long)
+//ORDENAR AS DATAS!!!!! USAR BINARY SEARCH PARA PROCURAR DATA QUE QUEREMOS!!!
+
+data class Tweet(val createdAt: String, val hashtags: List<String>, val id: Long, val uid: Long)
 
 private const val TWEET_PARTS = 4
 
@@ -19,7 +21,7 @@ fun loadTweets(filename: String): List<Tweet> {
                 val createdAt = parts[0].split(": ")[1].trim('\"')
                 val id = parts[2].split(": ")[1].toLong()
                 val uid = parts[3].split(": ")[1].trim('}', '\"').toLong()
-                val hashtags = parts[1].split(": ")[1].trim('[', ']', '\"').split(", ")
+                val hashtags = parts[1].split(": ")[1].trim('[', ']', '\"').split(", ").map { it.trim('\"') }
                 tweets.add(Tweet(createdAt, hashtags, id, uid))
             }
         }
@@ -41,11 +43,48 @@ fun dateStringToSeconds(dateString: String): Long {
     return -1 // Return -1 if parsing fails
 }
 
+
 fun nearest(tweets: List<Tweet>, k: Int, dateTime: String): List<Tweet> {
     val dateInSeconds = dateStringToSeconds(dateTime)
     //abs -> valor absoluto
-    return tweets.sortedBy { abs(dateStringToSeconds(it.created_at) - dateInSeconds) }.take(k)
+    return tweets.sortedBy { abs(dateStringToSeconds(it.createdAt) - dateInSeconds) }.take(k)
 }
+
+
+
+fun nearest2(tweets: List<Tweet>, k: Int, dateTime: String): List<Tweet> {
+    val dateInSeconds = dateStringToSeconds(dateTime)
+    val tweetsWithDifference = tweets.map { Pair(it, abs(dateStringToSeconds(it.createdAt) - dateInSeconds)) }
+    val array = tweetsWithDifference.toTypedArray()
+    heapSort(array, array.size)
+    return array.take(k).map { it.first }
+}
+
+
+fun binarySearchtweet(tweets: Array<Pair<Tweet, Long>>, target: Long): Tweet {
+    var left = 0
+    var right = tweets.size - 1
+    while (left < right) {
+        val mid = left + (right - left) / 2
+        if (tweets[mid].second == target) {
+            return tweets[mid].first
+        }
+        if (tweets[mid].second < target) {
+            left = mid + 1
+        } else {
+            right = mid
+        }
+    }
+    // At this point, left == right.
+    // Check which one is closer to target, tweets[left - 1] or tweets[left]?
+    if (left > 0 && (tweets[left].second - target >= target - tweets[left - 1].second)) {
+        return tweets[left - 1].first
+    }
+    return tweets[left].first
+}
+
+
+
 
 fun mostMentioned(tweets: List<Tweet>, hashtags: List<String>): String {
     val counts = mutableMapOf<String, Int>()
@@ -67,17 +106,19 @@ fun processCommand(command: String, tweets: List<Tweet>) {
         }
         "nearest" -> {
             val k = parts[1].toInt()
-            val dateTime = parts.slice(2 until parts.size).joinToString(" ").trim('\"')
-            println(nearest(tweets, k, dateTime))
+            val dateTime = parts.slice(2..<parts.size).joinToString(" ").trim('\"')
+            println(nearest2(tweets,k,dateTime))
         }
     }
 }
 fun main() {
     val tweets = loadTweets("tweetsSample.twt")
-    while (true) {
-        print("Enter command: ")
-        val command = readln()
-        processCommand(command, tweets)
-    }
+    print("introduza instrução: ")
+    val command = readln()
+    val init= java.lang.System.currentTimeMillis()
+    processCommand(command, tweets)
+    val end = java.lang.System.currentTimeMillis()
+    val diff = end-init
+    println(diff)
 }
 
