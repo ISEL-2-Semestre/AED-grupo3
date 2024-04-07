@@ -3,7 +3,7 @@ fun insertionSort(array:IntArray, left:Int, right:Int){
     for(i in left+1 .. right){
         v = array[i]
         var j = i
-        while(j>left && v<array[j-i]){
+        while(j>left && v<array[j-1]){
             array[j] = array[j-1]
             j--
         }
