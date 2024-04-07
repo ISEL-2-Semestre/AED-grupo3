@@ -1,6 +1,6 @@
 import java.util.Stack
 
-fun quickSort(array: Array<Int>, left: Int, right: Int) {
+fun quickSort(array: IntArray, left: Int, right: Int) {
     if (left<right) {
         val i = partition(array, left, right)
         quickSort(array, left, i - 1)
@@ -8,7 +8,7 @@ fun quickSort(array: Array<Int>, left: Int, right: Int) {
     }
 }
 
-fun quickSortIterativo(array: Array<Int>, left: Int, right: Int) {
+fun quickSortIterativo(array: IntArray, left: Int, right: Int) {
     val stack = Stack<Int>()
     stack.push(left)
     stack.push(right)
@@ -30,7 +30,7 @@ fun quickSortIterativo(array: Array<Int>, left: Int, right: Int) {
     }
 }
 
-fun partition(array: Array<Int>, left:Int, right: Int): Int {
+fun partition(array: IntArray, left:Int, right: Int): Int {
     var i = left - 1
     var j = right
     val pivot = array[right]
