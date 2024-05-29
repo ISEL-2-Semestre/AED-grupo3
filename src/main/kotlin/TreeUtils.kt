@@ -1,16 +1,12 @@
-class Node<T>(
-    var value: T,
-    var previous: Node<T>? = null,
-    var next: Node<T>? = null
-)
+data class Node<E>(var item: E, var left:Node<E>?, var right:Node<E>?)
 
 fun printIf(root: Node<Int>?, predicate: (Int) -> Boolean) {
     if (root != null) {
-        printIf(root.previous, predicate)
-        if (predicate(root.value)) {
-            println(root.value)
+        printIf(root.left, predicate)
+        if (predicate(root.item)) {
+            println(root.item)
         }
-        printIf(root.next, predicate)
+        printIf(root.right, predicate)
     }
 }
 
@@ -18,9 +14,9 @@ fun countBetween(root: Node<Int>?, min: Int, max: Int): Int {
     if (root == null) {
         return 0
     }
-    val leftCount = countBetween(root.previous, min, max)
-    val rightCount = countBetween(root.next, min, max)
-    return leftCount + rightCount + if (root.value in min..max) 1 else 0
+    val leftCount = countBetween(root.left, min, max)
+    val rightCount = countBetween(root.right, min, max)
+    return leftCount + rightCount + if (root.item in min..max) 1 else 0
 }
 
 fun findCommonAncestor(root: Node<Int>?, n1: Int, n2: Int): Node<Int>? {
